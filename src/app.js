@@ -36,37 +36,36 @@ async function init() {
   }
 
   // Event handler to deal with "Create text fragment and store it in the fragments server" form submission
-  postForm.onsubmit = (e) => {
+  postForm.onsubmit = async (e) => {
     e.preventDefault(); // prevent the browser from automatically submitting the form
     if (user) {
       let fragmentData = fragmentDataInputField.value; // get the value from the text input field
-      postFragment(user, fragmentData);   // create the fragment and save it to db
+      await postFragment(user, fragmentData);   // create the fragment and save it to db
       fragmentDataInputField.value = '';  // clear the input field
     }
   }
 
   // Event handler to deal with "Get an existing fragment by ID" form submission
-  getByIdForm.onsubmit = (e) => {
+  getByIdForm.onsubmit = async (e) => {
     e.preventDefault(); // prevent the browser from automatically submitting the form
     if (user) {
       let fragmentId = fragmentIdInputField.value; // get the value from the text input field
-      getFragmentById(user, fragmentId);  // get fragment from db
+      await getFragmentById(user, fragmentId);  // get fragment from db
       fragmentIdInputField.value = '';  // clear the input field
     }
   }
 
   // Event handler to deal with "Get user fragments" button
-  getFragmentsBtn.onclick = () => {
+  getFragmentsBtn.onclick = async () => {
     if (user) {
-      getUserFragments(user); // get fragments from db
+      await getUserFragments(user); // get fragments from db
     }
   };
 
   // Event handler to deal with "Access health check route" button
-  healthCheckBtn.onclick = () => {
+  healthCheckBtn.onclick = async () => {
     // Do an authenticated request to the fragments API server and log the result
-    console.log('clicked button');
-    getHealthCheck();
+    await getHealthCheck();
   };
 
   // Log the user info for debugging purposes
@@ -82,7 +81,7 @@ async function init() {
   loginBtn.disabled = true;
 
   // Do an authenticated request to the fragments API server and log the result
-  getUserFragments(user);
+  await getUserFragments(user);
 }
 
 // Wait for the DOM to be ready, then start the app
