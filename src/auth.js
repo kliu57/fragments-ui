@@ -70,6 +70,12 @@ async function getUser() {
         headers['Authorization'] = `Bearer ${idToken}`;
         return headers;
       },
+      // headers with our Authorization info for POST
+      postAuthorizationHeaders: (type = 'text/plain') => {
+        const headers = { 'Content-Type': type };
+        headers['Authorization'] = `Bearer ${idToken}`;
+        return headers;
+      },
     };
   } catch (err) {
     console.log(err);

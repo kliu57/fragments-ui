@@ -14,11 +14,23 @@
     <section hidden id="user">
       <h2>Hello <span class="username"></span>!</h2>
 
-      <h3>Create text fragment and store it in the fragments server:</h3>
-      <form action="http://ec2-44-210-125-228.compute-1.amazonaws.com:8080/fragments" method="post">
-        <input type="text" id="body" name="body">
-        <input type="submit" value="Submit">
+      <h4>Create text fragment and store it in the fragments server (Test POST /fragments) [See response in DevTools > Console/Network]:</h4>
+      <form id="post-form" method="post">
+        <input type="text" id="fragmentData" name="fragmentData" placeholder="Enter fragment data">
+        <input type="submit" value="Post text fragment">
       </form>
+
+      <h4>Get list of user's existing fragment IDs (Test GET /fragments) [See response in DevTools > Console/Network]</h4>
+      <button id="getFragmentsBtn">Get user fragments</button>
+
+      <h4>Get an existing fragment by ID (Test GET /fragments/:id) [See response in DevTools > Console/Network]</h4>
+      <form id="get-by-id-form" method="post">
+        <input type="text" id="fragmentId" name="fragmentId" placeholder="Enter fragment ID">
+        <input type="submit" value="Get user fragment by ID">
+      </form>
+
+      <h4>Access health check route (Test GET /) [See response in DevTools > Console/Network]</h4>
+      <button id="healthCheckBtn">Access health check route</button>
     </section>
   </body>
 </html>

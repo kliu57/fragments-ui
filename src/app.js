@@ -1,13 +1,19 @@
 // src/app.js
 
 import { Auth, getUser } from './auth';
-import { getUserFragments } from './api';
+import { getUserFragments, postFragment, getFragmentById, getHealthCheck } from './api';
 
 async function init() {
   // Get our UI elements
   const userSection = document.querySelector('#user');
   const loginBtn = document.querySelector('#login');
   const logoutBtn = document.querySelector('#logout');
+  const postForm = document.querySelector('#post-form');
+  const fragmentDataInputField = document.querySelector('#fragmentData')
+  const getFragmentsBtn = document.querySelector('#getFragmentsBtn');
+  const getByIdForm = document.querySelector('#get-by-id-form');
+  const fragmentIdInputField = document.querySelector('#fragmentId')
+  const healthCheckBtn = document.querySelector('#healthCheckBtn');
 
   // Wire up event handlers to deal with login and logout.
   loginBtn.onclick = () => {
@@ -28,6 +34,40 @@ async function init() {
     logoutBtn.disabled = true;
     return;
   }
+
+  // Event handler to deal with "Create text fragment and store it in the fragments server" form submission
+  postForm.onsubmit = (e) => {
+    e.preventDefault(); // prevent the browser from automatically submitting the form
+    if (user) {
+      let fragmentData = fragmentDataInputField.value; // get the value from the text input field
+      postFragment(user, fragmentData);   // create the fragment and save it to db
+      fragmentDataInputField.value = '';  // clear the input field
+    }
+  }
+
+  // Event handler to deal with "Get an existing fragment by ID" form submission
+  getByIdForm.onsubmit = (e) => {
+    e.preventDefault(); // prevent the browser from automatically submitting the form
+    if (user) {
+      let fragmentId = fragmentIdInputField.value; // get the value from the text input field
+      getFragmentById(user, fragmentId);  // get fragment from db
+      fragmentIdInputField.value = '';  // clear the input field
+    }
+  }
+
+  // Event handler to deal with "Get user fragments" button
+  getFragmentsBtn.onclick = () => {
+    if (user) {
+      getUserFragments(user); // get fragments from db
+    }
+  };
+
+  // Event handler to deal with "Access health check route" button
+  healthCheckBtn.onclick = () => {
+    // Do an authenticated request to the fragments API server and log the result
+    console.log('clicked button');
+    getHealthCheck();
+  };
 
   // Log the user info for debugging purposes
   console.log({ user });

@@ -23,6 +23,76 @@ export async function getUserFragments(user) {
     const data = await res.json();
     console.log('Got user fragments data', { data });
   } catch (err) {
-    console.error('Unable to call GET /v1/fragment', { err });
+    console.error('Unable to call GET /v1/fragments', { err });
+  }
+}
+
+/**
+ * Given an authenticated user, create a text fragment for this user and 
+ * save it to the fragments microservice (currently only running locally). 
+ * We expect a user to have an `idToken` attached, so we can send that  
+ * along with the request.
+ */
+export async function postFragment(user, fragmentData) {
+  console.log('Posting user fragment data...');
+  try {
+    const res = await fetch(`${apiUrl}/v1/fragments`, {
+      method: "POST",
+      // Generate headers with the proper Authorization bearer token to pass
+      headers: user.postAuthorizationHeaders(),
+      body: JSON.stringify(fragmentData),
+    });
+
+    if (!res.ok) {
+      throw new Error(`${res.status} ${res.statusText}`);
+    }
+
+    const data = await res.json();
+    console.log('Got posted fragment data', { data });
+  } catch (err) {
+    console.error('Unable to call POST /v1/fragment', { err });
+  }
+}
+
+/**
+ * Given an authenticated user, get a text fragment by ID from the fragments
+ * microservice (currently only running locally). We expect a user to have 
+ * an `idToken` attached, so we can send that along with the request.
+ */
+export async function getFragmentById(user, fragmentId) {
+  console.log(`Requesting user fragment data of id: ${fragmentId}`);
+  try {
+    const res = await fetch(`${apiUrl}/v1/fragments/${fragmentId}`, {
+      // Generate headers with the proper Authorization bearer token to pass
+      headers: user.authorizationHeaders(),
+    });
+
+    if (!res.ok) {
+      throw new Error(`${res.status} ${res.statusText}`);
+    }
+
+    const data = await res.json();
+    console.log(`Got user fragment data of id: ${fragmentId}`, { data });
+  } catch (err) {
+    console.error(`Unable to call GET /v1/fragments/${fragmentId}`, { err });
+  }
+}
+
+/**
+ * Access the health check route for checking the health of the service
+ */
+export async function getHealthCheck() {
+  console.log('Requesting health check...');
+  try {
+    const res = await fetch(`${apiUrl}/`);
+
+    if (!res.ok) {
+      throw new Error(`${res.status} ${res.statusText}`);
+    }
+    
+    const data = await res.json();
+    console.log('Got health check', { data });
+  } catch (err) {
+    console.error('Unable to call GET /', { err });
   }
 }
