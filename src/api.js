@@ -40,7 +40,7 @@ export async function postFragment(user, fragmentData) {
       method: "POST",
       // Generate headers with the proper Authorization bearer token to pass
       headers: user.postAuthorizationHeaders(),
-      body: JSON.stringify(fragmentData),
+      body: fragmentData,
     });
 
     if (!res.ok) {
