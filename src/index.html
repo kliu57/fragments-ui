@@ -16,6 +16,14 @@
 
       <h4>Create text fragment and store it in the fragments server (Test POST /fragments) [See response in DevTools > Console/Network]:</h4>
       <form id="post-form" method="post">
+        <select name="types" id="fragmentDataType">
+          <option value="text/plain">text/plain</option>
+          <option value="text/plain; charset=utf-8">text/plain; charset=utf-8</option>
+          <option value="text/markdown">text/markdown</option>
+          <option value="text/html">text/html</option>
+          <option value="application/json">application/json</option>
+        </select>
+        &nbsp;
         <input type="text" id="fragmentData" name="fragmentData" placeholder="Enter fragment data">
         <input type="submit" value="Post text fragment">
       </form>

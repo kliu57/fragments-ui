@@ -33,13 +33,14 @@ export async function getUserFragments(user) {
  * We expect a user to have an `idToken` attached, so we can send that  
  * along with the request.
  */
-export async function postFragment(user, fragmentData) {
+export async function postFragment(user, fragmentData, fragmentDataType) {
   console.log('Posting user fragment data...');
+
   try {
     const res = await fetch(`${apiUrl}/v1/fragments`, {
       method: "POST",
       // Generate headers with the proper Authorization bearer token to pass
-      headers: user.postAuthorizationHeaders(),
+      headers: user.postAuthorizationHeaders(fragmentDataType),
       body: fragmentData,
     });
 

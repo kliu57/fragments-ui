@@ -9,6 +9,7 @@ async function init() {
   const loginBtn = document.querySelector('#login');
   const logoutBtn = document.querySelector('#logout');
   const postForm = document.querySelector('#post-form');
+  const fragmentDataTypeDropdown = document.querySelector('#fragmentDataType')
   const fragmentDataInputField = document.querySelector('#fragmentData')
   const getFragmentsBtn = document.querySelector('#getFragmentsBtn');
   const getByIdForm = document.querySelector('#get-by-id-form');
@@ -39,8 +40,9 @@ async function init() {
   postForm.onsubmit = async (e) => {
     e.preventDefault(); // prevent the browser from automatically submitting the form
     if (user) {
+      let fragmentDataType = fragmentDataTypeDropdown.value; // get the value from the dropdown field
       let fragmentData = fragmentDataInputField.value; // get the value from the text input field
-      await postFragment(user, fragmentData);   // create the fragment and save it to db
+      await postFragment(user, fragmentData, fragmentDataType);   // create the fragment and save it to db
       fragmentDataInputField.value = '';  // clear the input field
     }
   }
