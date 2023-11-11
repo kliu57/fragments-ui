@@ -80,6 +80,30 @@ export async function getFragmentById(user, fragmentId) {
 }
 
 /**
+ * Given an authenticated user, get a text fragment's metadata by ID from the fragments
+ * microservice (currently only running locally). We expect a user to have 
+ * an `idToken` attached, so we can send that along with the request.
+ */
+export async function getFragmentMetaById(user, fragmentId) {
+  console.log(`Requesting user fragment metadata of id: ${fragmentId}`);
+  try {
+    const res = await fetch(`${apiUrl}/v1/fragments/${fragmentId}/info`, {
+      // Generate headers with the proper Authorization bearer token to pass
+      headers: user.authorizationHeaders(),
+    });
+
+    if (!res.ok) {
+      throw new Error(`${res.status} ${res.statusText}`);
+    }
+
+    const data = await res.json();
+    console.log(`Got user fragment metadata of id: ${fragmentId}`, { data });
+  } catch (err) {
+    console.error(`Unable to call GET /v1/fragments/${fragmentId}/info`, { err });
+  }
+}
+
+/**
  * Access the health check route for checking the health of the service
  */
 export async function getHealthCheck() {

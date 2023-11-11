@@ -1,7 +1,7 @@
 // src/app.js
 
 import { Auth, getUser } from './auth';
-import { getUserFragments, postFragment, getFragmentById, getHealthCheck } from './api';
+import { getUserFragments, postFragment, getFragmentById, getFragmentMetaById, getHealthCheck } from './api';
 
 async function init() {
   // Get our UI elements
@@ -52,8 +52,14 @@ async function init() {
     e.preventDefault(); // prevent the browser from automatically submitting the form
     if (user) {
       let fragmentId = fragmentIdInputField.value; // get the value from the text input field
-      await getFragmentById(user, fragmentId);  // get fragment from db
-      fragmentIdInputField.value = '';  // clear the input field
+
+      if (document.activeElement.value == 'Get user fragment by ID') {
+        console.log("button1");
+        await getFragmentById(user, fragmentId);  // get fragment from db
+      } else if (document.activeElement.value == 'Get fragment metadata by ID') {
+        console.log("button2");
+        await getFragmentMetaById(user, fragmentId);  // get fragment metadata from db
+      }
     }
   }
 
