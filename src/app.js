@@ -54,10 +54,8 @@ async function init() {
       let fragmentId = fragmentIdInputField.value; // get the value from the text input field
 
       if (document.activeElement.value == 'Get user fragment by ID') {
-        console.log("button1");
         await getFragmentById(user, fragmentId);  // get fragment from db
       } else if (document.activeElement.value == 'Get fragment metadata by ID') {
-        console.log("button2");
         await getFragmentMetaById(user, fragmentId);  // get fragment metadata from db
       }
     }
