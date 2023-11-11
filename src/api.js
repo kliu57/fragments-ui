@@ -28,6 +28,31 @@ export async function getUserFragments(user) {
 }
 
 /**
+ * Given an authenticated user, request all fragments, expanded to include a 
+ * full representation of the fragments' metadata, for this user from the
+ * fragments microservice (currently only running locally). We expect a user
+ * to have an `idToken` attached, so we can send that along with the request.
+ */
+export async function getUserFragmentsExpanded(user) {
+  console.log('Requesting expanded user fragments data...');
+  try {
+    const res = await fetch(`${apiUrl}/v1/fragments?expand=1`, {
+      // Generate headers with the proper Authorization bearer token to pass
+      headers: user.authorizationHeaders(),
+    });
+
+    if (!res.ok) {
+      throw new Error(`${res.status} ${res.statusText}`);
+    }
+
+    const data = await res.json();
+    console.log('Got expanded user fragments data', { data });
+  } catch (err) {
+    console.error('Unable to call GET /v1/fragments?expand=1', { err });
+  }
+}
+
+/**
  * Given an authenticated user, create a text fragment for this user and 
  * save it to the fragments microservice (currently only running locally). 
  * We expect a user to have an `idToken` attached, so we can send that  

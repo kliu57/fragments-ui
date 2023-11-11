@@ -1,17 +1,17 @@
 // src/app.js
 
 import { Auth, getUser } from './auth';
-import { getUserFragments, postFragment, getFragmentById, getFragmentMetaById, getHealthCheck } from './api';
+import { getUserFragments, getUserFragmentsExpanded, postFragment, getFragmentById, getFragmentMetaById, getHealthCheck } from './api';
 
 async function init() {
   // Get our UI elements
   const userSection = document.querySelector('#user');
   const loginBtn = document.querySelector('#login');
   const logoutBtn = document.querySelector('#logout');
+  const getForm = document.querySelector('#get-form');
   const postForm = document.querySelector('#post-form');
   const fragmentDataTypeDropdown = document.querySelector('#fragmentDataType')
   const fragmentDataInputField = document.querySelector('#fragmentData')
-  const getFragmentsBtn = document.querySelector('#getFragmentsBtn');
   const getByIdForm = document.querySelector('#get-by-id-form');
   const fragmentIdInputField = document.querySelector('#fragmentId')
   const healthCheckBtn = document.querySelector('#healthCheckBtn');
@@ -47,6 +47,18 @@ async function init() {
     }
   }
 
+  // Event handler to deal with "Get list of user's existing fragments" form submission
+  getForm.onsubmit = async (e) => {
+    e.preventDefault(); // prevent the browser from automatically submitting the form
+    if (user) {
+      if (document.activeElement.value == 'Get user fragments') {
+        await getUserFragments(user);  // get fragments from db
+      } else if (document.activeElement.value == 'Get expanded user fragments') {
+        await getUserFragmentsExpanded(user);  // get expanded fragments from db
+      }
+    }
+  }
+
   // Event handler to deal with "Get an existing fragment by ID" form submission
   getByIdForm.onsubmit = async (e) => {
     e.preventDefault(); // prevent the browser from automatically submitting the form
@@ -60,13 +72,6 @@ async function init() {
       }
     }
   }
-
-  // Event handler to deal with "Get user fragments" button
-  getFragmentsBtn.onclick = async () => {
-    if (user) {
-      await getUserFragments(user); // get fragments from db
-    }
-  };
 
   // Event handler to deal with "Access health check route" button
   healthCheckBtn.onclick = async () => {

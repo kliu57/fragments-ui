@@ -32,14 +32,18 @@
         <input type="submit" value="Post fragment">
       </form>
 
-      <h4>Get list of user's existing fragment IDs (Test GET /fragments) [See response in DevTools > Console/Network]</h4>
-      <button id="getFragmentsBtn">Get user fragments</button>
+      <h4>Get list of user's existing fragments (Test GET /fragments) (Test GET /fragments?expand=1) [See response in DevTools > Console/Network]</h4>
+      <form id="get-form" method="post">
+        <input type="submit" name="action" value="Get user fragments">
+        <input type="submit" name="action" value="Get expanded user fragments">
+      </form>
 
-      <h4>Get an existing fragment by ID (Test GET /fragments/:id) [See response in DevTools > Console/Network]</h4>
+      <h4>Get an existing fragment by ID (Test GET /fragments/:id) (Test GET /fragments/:id/info) [See response in DevTools > Console/Network]</h4>
       <form id="get-by-id-form" method="post">
         <input type="text" id="fragmentId" name="fragmentId" placeholder="Enter fragment ID">
         <input type="submit" name="action" value="Get user fragment by ID">
         <input type="submit" name="action" value="Get fragment metadata by ID">
+      </form>
         
       <h4>Access health check route (Test GET /) [See response in DevTools > Console/Network]</h4>
       <button id="healthCheckBtn">Access health check route</button>
