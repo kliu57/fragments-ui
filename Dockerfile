@@ -19,7 +19,7 @@ COPY package*.json ./
 
 # execute a command and cache this layer
 # Install node dependencies defined in package-lock.json
-RUN npm install
+RUN npm ci
 
 ########################################################################################################################
 # Stage 1: Build the fragments-ui web app
