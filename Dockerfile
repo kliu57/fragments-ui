@@ -56,7 +56,7 @@ COPY . .
 COPY ./src ./src
 
 # Use a build ARG to pass in .env values
-ARG API_URL=http://localhost:8080 \
+ARG API_URL=http://ec2-34-224-75-251.compute-1.amazonaws.com:8080 \
     AWS_COGNITO_POOL_ID=us-east-1_us-east-1_dh0HaJjpO \
     AWS_COGNITO_CLIENT_ID=34tu64677p7rnmdtrknrmimggs \
     AWS_COGNITO_HOSTED_UI_DOMAIN=kliu-fragments.auth.us-east-1.amazoncognito.com \
