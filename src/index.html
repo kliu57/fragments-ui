@@ -4,7 +4,9 @@
     <meta charset="utf-8" />
     <title>Fragments UI</title>
     <link rel="stylesheet" href="https://unpkg.com/bamboo.css" />
+    <script></script>
     <script type="module" src="app.js"></script>
+   </script>
   </head>
   <body>
     <h1>Fragments UI</h1>
@@ -14,7 +16,7 @@
     <section hidden id="user">
       <h2>Hello <span class="username"></span>!</h2>
 
-      <h4>Create fragment and store it in the fragments server (Test POST /fragments) [See response in DevTools > Console/Network]:</h4>
+      <h4>Create fragment and store it in the fragments server (Test POST /fragments) :</h4>
       <form id="post-form" method="post">
         <select name="types" id="fragmentDataType">
           <option value="text/plain">text/plain</option>
@@ -22,30 +24,63 @@
           <option value="text/markdown">text/markdown</option>
           <option value="text/html">text/html</option>
           <option value="application/json">application/json</option>
-          <option value="image/png">image/png</option>
-          <option value="image/jpeg">image/jpeg</option>
-          <option value="image/webp">image/webp</option>
-          <option value="image/gif">image/gif</option>
         </select>
         &nbsp;
         <input type="text" id="fragmentData" name="fragmentData" placeholder="Enter fragment data">
         <input type="submit" value="Post fragment">
       </form>
 
-      <h4>Get list of user's existing fragments (Test GET /fragments) (Test GET /fragments?expand=1) [See response in DevTools > Console/Network]</h4>
+      <h4>Create image fragment and store it in the fragments server (Test POST /fragments) :</h4>
+      <form id="post-image-form" method="post" enctype="multipart/form-data">
+        <input type="file" id="fragmentImageData" name="fragmentImageData" accept="image/png, image/jpeg, image/webp, image/gif"/>
+        <input type="submit" value="Post image fragment">
+      </form>
+
+      <h4>Get list of user's existing fragments (Test GET /fragments) (Test GET /fragments?expand=1) </h4>
       <form id="get-form" method="post">
         <input type="submit" name="action" value="Get user fragments">
         <input type="submit" name="action" value="Get expanded user fragments">
       </form>
 
-      <h4>Get an existing fragment by ID (Test GET /fragments/:id) (Test GET /fragments/:id/info) [See response in DevTools > Console/Network]</h4>
+      <h4>Get an existing fragment by ID (Test GET /fragments/:id) (Test GET /fragments/:id/info) </h4>
       <form id="get-by-id-form" method="post">
         <input type="text" id="fragmentId" name="fragmentId" placeholder="Enter fragment ID">
         <input type="submit" name="action" value="Get user fragment by ID">
         <input type="submit" name="action" value="Get fragment metadata by ID">
       </form>
-        
-      <h4>Access health check route (Test GET /) [See response in DevTools > Console/Network]</h4>
+      <div><image src="" id="photo"></image></div>
+
+      <h4>Delete an existing fragment by ID (Test DELETE /fragments/:id) </h4>
+      <form id="delete-form" method="delete">
+        <input type="text" id="deleteFragmentId" name="deleteFragmentId" placeholder="Enter fragment ID">
+        <input type="submit" name="action" value="Delete user fragment">
+      </form>
+
+      <h4>Update an existing fragment (Test PUT /fragments/:id) :</h4>
+      <form id="update-form" method="put">
+        <input type="text" id="updateFragmentId" name="updateFragmentId" placeholder="Enter fragment ID">
+        &nbsp;
+        <select name="types" id="updateFragmentDataType">
+          <option value="text/plain">text/plain</option>
+          <option value="text/plain; charset=utf-8">text/plain; charset=utf-8</option>
+          <option value="text/markdown">text/markdown</option>
+          <option value="text/html">text/html</option>
+          <option value="application/json">application/json</option>
+        </select>
+        &nbsp;
+        <input type="text" id="updateFragmentData" name="updateFragmentData" placeholder="Enter fragment data">
+        <input type="submit" value="Update fragment">
+      </form>
+
+      <h4>Update an existing image fragment (Test PUT /fragments/:id) :</h4>
+      <form id="update-image-form" method="post" enctype="multipart/form-data">
+        <input type="text" id="updateFragmentImageId" name="updateFragmentImageId" placeholder="Enter fragment ID">
+        &nbsp;
+        <input type="file" id="updateFragmentImageData" name="updateFragmentImageData" accept="image/png, image/jpeg, image/webp, image/gif"/>
+        <input type="submit" value="Update image fragment">
+      </form>
+
+      <h4>Access health check route (Test GET /) </h4>
       <button id="healthCheckBtn">Access health check route</button>
     </section>
   </body>
